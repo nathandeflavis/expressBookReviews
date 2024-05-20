@@ -33,9 +33,6 @@ const authenticatedUser = (username, password)=>{ //returns boolean
     }
 }
 
-//use a session object with user-defined secret and ensure that the session is valid
-//app.use(session({secret:"fingerpint"},resave=true,saveUninitialized=true));
-
 //only registered users can login
 regd_users.post("/login", (req,res) => {
     //Write your code here
@@ -63,7 +60,27 @@ regd_users.post("/login", (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //post review with the username (stored in the session) posted
+    if(!req.session.authorization) {
+        //unauthorised user
+        return;
+    }
+
+    //authorised user
+    const username = req.session.authorization['username'];
+    const isbn = req.params.isbn;
+
+    //accept a review as a request query
+    const review = req.body.review;
+    //If the same user posts a different review on the same ISBN, it should modify the existing review
+    //If another user logs in and posts a review on the same ISBN, it will get added as a different review under the same ISBN
+    //reviews has no push method
+    const book = books[isbn];
+    const reviews = book['reviews'];
+    reviews[username] = review;
+    book['reviews'] = reviews;
+    books[isbn] = book;
+    res.send(book);
 });
 
 module.exports.authenticated = regd_users;
