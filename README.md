@@ -1,4 +1,4 @@
-# coding-project-template
+# expressBookReviews
 An online book review application (Final Project in [Developing Back-End Apps with Node.js and Express](https://www.coursera.org/learn/developing-backend-apps-with-nodejs-and-express) course, part of [IBM Full Stack Software Developer Professional Certificate](https://www.coursera.org/professional-certificates/ibm-full-stack-cloud-developer)).
 
 # What does the project do?
@@ -40,23 +40,19 @@ I implemented the application as a RESTful web service with the Create/Read/Upda
 It's an opportunity to put my Node.js and Express.js skills into practice.
 
 # How can users can get started with the project?
+You can run the application at the command line.
+
 ## Prerequisites
-- Visual Studio (VS) Code
-- 'Live Server' extension
 - Git
 - Node Package Manager (NPM)
 
-## Command-line steps
-You can run the application at the command line with the following steps:
-1. Open VS Code.
-2. Choose the 'Terminal' > 'New Terminal' menu option.
-3. Clone this repository by entering the command: `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathandeflavis/expressBookReviews.git`
-4. Switch to the 'final_project' directory by entering the command: `cd final_project/`
-5. Install the required dependencies by entering the command: `npm install`
-6. Start a local-host server on port 5500 by clicking 'Go Live' in the bottom-right corner.
-7. Start the application by entering the command: `npm start`
-8. To stop the application, press Ctrl-C.
-9. To stop the server, click 'Port 5500' in the bottom-right corner.
+## Steps
+1. Open a terminal window.
+3. Clone this repository: `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathandeflavis/expressBookReviews.git`
+4. Change to the directory **final_project**: `cd final_project/`
+5. Run `npm install` to install the required modules.
+6. Run `npm start` to start the server.
+7. To stop the server, press Ctrl-C.
 
 # Where can users can get help with the project?
 Users can contact the project's maintainers and contributors for help.
