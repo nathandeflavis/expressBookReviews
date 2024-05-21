@@ -124,7 +124,8 @@ public_users.get('/review/:isbn',function (req, res) {
 });
 
 const axios = require('axios');
-const base_url = 'https://nathandeflav-3000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/';
+const port = 5500;
+const base_url = 'http://localhost:' + port;
 
 //get the list of books available in the shop using async-await with Axios
 const test_get_books = async () => {
