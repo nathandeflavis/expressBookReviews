@@ -157,4 +157,20 @@ const test_get_book_by_isbn = async (isbn) => {
 const isbn = 1;
 test_get_book_by_isbn(1);
 
+//get the book details based on Author using async-await with Axios
+const test_get_book_by_author = async (author) => {
+    try {
+        const route = `/author/${author}`;
+        const qualified_url = base_url + route;
+        const response = await axios.get(qualified_url);
+        console.log(`Books by author ${isbn}:`);
+        console.log(response.data);
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+const author = 'Unknown';
+test_get_book_by_author(author);
+
 module.exports.general = public_users;
