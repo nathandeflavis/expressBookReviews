@@ -4,7 +4,6 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-
 public_users.post("/register", (req,res) => {
   //Write your code here
   //take the ‘username’ and ‘password’ provided in the body of the request for registration
@@ -33,12 +32,13 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
+//use async-await with Axios
+public_users.get('/', (req, res) => {
   //Write your code here
     const replacer = null;
     const space = 3;
     //display the output neatly
-    res.send(JSON.stringify(books,replacer,space));
+    res.send(JSON.stringify(books,replacer,space));  
 });
 
 // Get book details based on ISBN
@@ -122,5 +122,23 @@ public_users.get('/review/:isbn',function (req, res) {
     res.send('Unable to find book!');
   }
 });
+
+const axios = require('axios');
+const base_url = 'https://nathandeflav-3000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/';
+
+//get the list of books available in the shop using async-await with Axios
+const getBooks = async () => {
+    try {
+        const route = '/';
+        const qualified_url = base_url + route;
+        const response = await axios.get(base_url + '/');
+        console.log('Books:');
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+getBooks();
 
 module.exports.general = public_users;
