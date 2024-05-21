@@ -163,7 +163,7 @@ const test_get_book_by_author = async (author) => {
         const route = `/author/${author}`;
         const qualified_url = base_url + route;
         const response = await axios.get(qualified_url);
-        console.log(`Books by author ${author}:`);
+        console.log(`Books by author ${isbn}:`);
         console.log(response.data);
     } catch(err) {
         console.error(err);
@@ -172,21 +172,5 @@ const test_get_book_by_author = async (author) => {
 
 const author = 'Unknown';
 test_get_book_by_author(author);
-
-//get the book details based on Title using async-await with Axios
-const test_get_book_by_title = async (title) => {
-    try {
-        const route = `/title/${title}`;
-        const qualified_url = base_url + route;
-        const response = await axios.get(qualified_url);
-        console.log(`Books with title '${title}':`);
-        console.log(response.data);
-    } catch(err) {
-        console.error(err);
-    }
-}
-
-const title = 'Things Fall Apart';
-test_get_book_by_title(title);
 
 module.exports.general = public_users;
