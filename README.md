@@ -40,11 +40,14 @@ I implemented the application as a RESTful web service with the Create/Read/Upda
 It's an opportunity to put my Node.js and Express.js skills into practice.
 
 # How can users can get started with the project?
-You can run the application at the command line with the following commands (requires `git` and `npm` to be installed):
-1. `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathandeflavis/expressBookReviews.git`
-2. `cd expressBookReviews/final_project/`
-3. `npm install`
-4. `npm start`
+You can run the application at the command line with the following steps (requires Visual Studio Code, Live Server extension, Git and NPM to be installed):
+1. Open Visual Studio Code.
+2. Choose the 'Terminal' > 'New Terminal' menu option.
+3. Clone this repository by entering the command: `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathandeflavis/expressBookReviews.git`
+4. Switch to the 'final_project' directory by entering the command: `cd final_project/`
+5. Install the required dependencies by entering the command: `npm install`
+6. Start a local-host server on port 5500 by clicking 'Go Live' in the bottom-right corner.
+7. Start the application by entering the command: `npm start`
 
 # Where can users can get help with the project?
 Users can contact the project's maintainers and contributors for help.
