@@ -127,18 +127,34 @@ const axios = require('axios');
 const base_url = 'https://nathandeflav-3000.theianext-1-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/';
 
 //get the list of books available in the shop using async-await with Axios
-const getBooks = async () => {
+const test_get_books = async () => {
     try {
         const route = '/';
         const qualified_url = base_url + route;
-        const response = await axios.get(base_url + '/');
+        const response = await axios.get(qualified_url);
         console.log('Books:');
         console.log(response.data);
-    } catch (error) {
-        console.error(error);
+    } catch(err) {
+        console.error(err);
     }
 }
 
-getBooks();
+test_get_books();
+
+//get the book details based on ISBN using async-await with Axios
+const test_get_book_by_isbn = async (isbn) => {
+    try {
+        const route = `/isbn/${isbn}`;
+        const qualified_url = base_url + route;
+        const response = await axios.get(qualified_url);
+        console.log(`Book with ISBN ${isbn}:`);
+        console.log(response.data);
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+const isbn = 1;
+test_get_book_by_isbn(1);
 
 module.exports.general = public_users;
