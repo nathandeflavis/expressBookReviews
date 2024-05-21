@@ -61,27 +61,65 @@ regd_users.post("/login", (req,res) => {
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
   //post review with the username (stored in the session) posted
-    if(!req.session.authorization) {
-        //unauthorised user
+    const username = req.session.authorization['username'];
+    const isbn = req.params.isbn;
+    //accept a review as a request query
+    const book = books[isbn];
+
+    if(book) { //Check if book exists
+        const reviews = book['reviews'];
+        const review = req.body.review;
+    
+        //if the review has been changed, update the review
+        if(review) {
+            //If the same user posts a different review on the same ISBN, it should modify the existing review
+            //If another user logs in and posts a review on the same ISBN, it will get added as a different review under the same ISBN
+            reviews[username] = review;
+        }
+    
+        book['reviews'] = reviews;
+        books[isbn] = book;
+        //res.send(`Book with the ISBN ${isbn} updated.`);
+        res.send(book);            
+    } else {
+        res.send("Unable to find book!");
+    }
+});
+
+//delete book review
+/*regd_users.delete("/auth/review/:isbn", (req, res) => {
+    //Filter & delete the reviews based on the session username, so that a user can delete only his/her reviews and not other users’.
+    const isbn = req.params.isbn;
+
+    if(!isbn) {
+        //ISBN doesn't exist
+        res.send("Unable to find book!");
         return;
     }
 
-    //authorised user
-    const username = req.session.authorization['username'];
-    const isbn = req.params.isbn;
-
-    //accept a review as a request query
-    const review = req.body.review;
-    //If the same user posts a different review on the same ISBN, it should modify the existing review
-    //If another user logs in and posts a review on the same ISBN, it will get added as a different review under the same ISBN
-    //reviews has no push method
+    //ISBN exists
     const book = books[isbn];
+    const session_username = req.session.authorization['username'];
     const reviews = book['reviews'];
-    reviews[username] = review;
-    book['reviews'] = reviews;
+
+    const entries = Object.entries(obj);
+    entries = entries.filter(([username]) => {
+        const review_is_by_other_user = username != session_username;
+        return review_is_by_other_user;        
+    });
+    Object.fromEntries(entries);
+
+    const reviews_by_other_users = Array.prototype.filter.call(reviews, ({username : review}) => {
+        const review_is_by_other_user = username != session_username;
+        return review_is_by_other_user;
+    });
+
+    book['reviews'] = reviews_by_other_users;
     books[isbn] = book;
     res.send(book);
-});
+    const arr = [{"username":"review"}];
+    //res.send(`Reviews by the username ${session_username} for the book with the ISBN ${isbn} deleted.`);
+});*/
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;

@@ -8,7 +8,8 @@ const public_users = express.Router();
 public_users.post("/register", (req,res) => {
   //Write your code here
   //take the ‘username’ and ‘password’ provided in the body of the request for registration
-  const username = req.body.username;
+  const username = 
+  req.body.username;
 
   if(!username) {
     //show other errors like eg. when username &/ password are not provided
