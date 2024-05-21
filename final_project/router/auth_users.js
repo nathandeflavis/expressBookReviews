@@ -67,6 +67,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     const book = books[isbn];
 
     if(book) { //Check if book exists
+        //book found
         const reviews = book['reviews'];
         const review = req.body.review;
     
@@ -79,47 +80,53 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     
         book['reviews'] = reviews;
         books[isbn] = book;
-        //res.send(`Book with the ISBN ${isbn} updated.`);
         res.send(book);            
     } else {
+        //book not found
         res.send("Unable to find book!");
     }
 });
 
 //delete book review
-/*regd_users.delete("/auth/review/:isbn", (req, res) => {
-    //Filter & delete the reviews based on the session username, so that a user can delete only his/her reviews and not other users’.
+regd_users.delete("/auth/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
-
-    if(!isbn) {
-        //ISBN doesn't exist
-        res.send("Unable to find book!");
-        return;
-    }
-
-    //ISBN exists
     const book = books[isbn];
-    const session_username = req.session.authorization['username'];
-    const reviews = book['reviews'];
 
-    const entries = Object.entries(obj);
-    entries = entries.filter(([username]) => {
-        const review_is_by_other_user = username != session_username;
-        return review_is_by_other_user;        
+    if(book) {
+        //book found
+        const reviews = book['reviews'];
+        const session_username = req.session.authorization['username'];
+        const reviews_by_other_users = get_reviews_by_other_users(reviews, session_username);
+        book['reviews'] = reviews_by_other_users;
+        books[isbn] = book;
+        res.send(book);    
+    } else {
+        //book not found
+        res.send('Unable to find book!');
+    }
+});
+
+//Filter & delete the reviews based on the session username, so that a user can delete only his/her reviews and not other users’.
+function get_reviews_by_other_users(reviews, session_username) {
+    const usernames = Object.keys(reviews);
+
+    const other_usernames = usernames.filter((username) => {
+        const is_other_username = username != session_username;
+        return is_other_username;
     });
-    Object.fromEntries(entries);
+   
+    const initialValue = {};
 
-    const reviews_by_other_users = Array.prototype.filter.call(reviews, ({username : review}) => {
-        const review_is_by_other_user = username != session_username;
-        return review_is_by_other_user;
-    });
+    const reviews_by_other_users = other_usernames.reduce((current, username) => {
+        //accumulate other usernames into new object
+        const review = reviews[username];
+        const sources = { [username] : review };
+        const accumulation = Object.assign(current, sources);
+        return accumulation;
+    }, initialValue);
 
-    book['reviews'] = reviews_by_other_users;
-    books[isbn] = book;
-    res.send(book);
-    const arr = [{"username":"review"}];
-    //res.send(`Reviews by the username ${session_username} for the book with the ISBN ${isbn} deleted.`);
-});*/
+    return reviews_by_other_users;
+}
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;

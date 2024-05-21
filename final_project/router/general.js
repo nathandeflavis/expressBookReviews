@@ -8,8 +8,7 @@ const public_users = express.Router();
 public_users.post("/register", (req,res) => {
   //Write your code here
   //take the ‘username’ and ‘password’ provided in the body of the request for registration
-  const username = 
-  req.body.username;
+  const username = req.body.username;
 
   if(!username) {
     //show other errors like eg. when username &/ password are not provided
@@ -47,50 +46,53 @@ public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
     //Retrieve the ISBN from the request parameters
     const isbn = req.params.isbn;
-    res.send(books[isbn]);
+    const book = books[isbn];
+
+    if(book) {
+        //book found
+        res.send(book);
+    } else {
+        //book not found
+        res.send('Unable to find book!')
+    }
  });
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
-  //Obtain all the keys for the ‘books’ object.
   const author = req.params.author;
-  const keys = Object.keys(books);
-  const books_by_author = [];
-
-  for(const key of keys) {
-    //Iterate through the ‘books’ array
-    const book = books[key];
-
-    //check the author matches the one provided in the request parameters
-    if(book["author"] == author) {
-        books_by_author.push(book);
-    }
-  }
-
+  const attribute_name = 'author';
+  const books_by_author = get_books_with_attribute(books, attribute_name, author);
   res.send(books_by_author);
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
-  //Obtain all the keys for the ‘books’ object.
   const title = req.params.title;
+  const attribute_name = 'title';
+  const books_with_title = get_books_with_attribute(books, attribute_name, title);
+  res.send(books_with_title);
+});
+
+//get books based on attribute
+function get_books_with_attribute(books, attribute_name, attribute_value) {
+  //Obtain all the keys for the ‘books’ object.
   const keys = Object.keys(books);
-  const books_by_title = [];
+  const books_with_attribute = [];
 
   for(const key of keys) {
     //Iterate through the ‘books’ array
     const book = books[key];
 
-    //check the title matches the one provided in the request parameters
-    if(book["title"] == title) {
-        books_by_title.push(book);
+    //check the attribute matches the one provided in the request parameters
+    if(book[attribute_name] == attribute_value) {
+        books_with_attribute.push(book);
     }
   }
 
-  res.send(books_by_title);
-});
+  return books_with_attribute;
+}
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
@@ -99,27 +101,26 @@ public_users.get('/review/:isbn',function (req, res) {
   const isbn = req.params.isbn;
   const book = books[isbn];
 
-  if(!book) {
-    //book not found
-    const body = `No book with ISBN ${isbn}.`;
+  if(book) {
+    //book found
+    const reviews = book["reviews"];
+    const num_reviews = reviews.length;
+    const book_has_reviews = num_reviews > 0;
+    var body;
+
+    if(book_has_reviews) {
+        body = reviews;
+    } else {
+        //book doesn't have reviews
+        body = 'Unable to find reviews!';
+    }
+
     res.send(body);
-    return;
   }
-
-  //book found
-  const reviews = book["reviews"];
-  const num_reviews = reviews.length;
-  const book_has_reviews = num_reviews > 0;
-  var body;
-
-  if(book_has_reviews) {
-    body = reviews;
-  } else {
-    //book doesn't have reviews
-    body = `No reviews for book with ISBN ${isbn}.`;
+  else {
+    //book not found
+    res.send('Unable to find book!');
   }
-
-  res.send(body);
 });
 
 module.exports.general = public_users;
