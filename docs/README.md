@@ -40,11 +40,7 @@ I implemented the application as a RESTful web service with the Create/Read/Upda
 It's an opportunity to put my Node.js and Express.js skills into practice.
 
 # How can users can get started with the project?
-You can run the application at the command line.
-
-## Prerequisites
-- Git
-- Node Package Manager (NPM)
+You can run the application an IBM Skills Network lab environment.
 
 ## Steps
 1. Open a terminal window.
