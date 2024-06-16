@@ -40,7 +40,7 @@ I implemented the application as a RESTful web service with the Create/Read/Upda
 It's an opportunity to put my Node.js and Express.js skills into practice.
 
 # How can users can get started with the project?
-You can run the application an [IBM Skills Network lab environment](https://skills.network).
+You can run the application in [an IBM Skills Network lab environment](https://skills.network).
 
 ## Steps
 1. Open a terminal window.
