@@ -38,7 +38,7 @@ public_users.get('/', (req, res) => {
     const replacer = null;
     const space = 3;
     //display the output neatly
-    res.send(JSON.stringify(books,replacer,space));  
+    res.send(JSON.stringify({"books" : books},replacer,space));  
 });
 
 // Get book details based on ISBN
@@ -63,7 +63,7 @@ public_users.get('/author/:author',function (req, res) {
   const author = req.params.author;
   const attribute_name = 'author';
   const books_by_author = get_books_with_attribute(books, attribute_name, author);
-  res.send(books_by_author);
+  res.send({"booksbyauthor": books_by_author});
 });
 
 // Get all books based on title
@@ -72,7 +72,7 @@ public_users.get('/title/:title',function (req, res) {
   const title = req.params.title;
   const attribute_name = 'title';
   const books_with_title = get_books_with_attribute(books, attribute_name, title);
-  res.send(books_with_title);
+  res.send({"booksbytitle": books_with_title});
 });
 
 //get books based on attribute
@@ -112,7 +112,7 @@ public_users.get('/review/:isbn',function (req, res) {
         body = reviews;
     } else {
         //book doesn't have reviews
-        body = 'Unable to find reviews!';
+        body = {};
     }
 
     res.send(body);
@@ -171,7 +171,7 @@ const test_get_book_by_author = async (author) => {
     }
 }
 
-const author = 'Unknown';
+const author = 'Dante Alighieri';
 test_get_book_by_author(author);
 
 //get the book details based on Title using async-await with Axios
