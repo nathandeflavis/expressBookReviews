@@ -24,7 +24,7 @@ You can run the application in [an IBM Skills Network lab environment](https://s
 
 ## Steps
 1. Open a terminal window.
-3. Clone this repository: `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathangjdf/expressBookReviews.git`
+3. Clone this repository: `[ ! -d 'expressBookReviews' ] && git clone https://github.com/nathandeflavis/expressBookReviews.git`
 4. Change to the directory **final_project**: `cd final_project/`
 5. Run `npm install` to install the required modules.
 6. Run `npm start` to start the server.
@@ -34,6 +34,6 @@ You can run the application in [an IBM Skills Network lab environment](https://s
 Users can contact the project's maintainers and contributors for help.
 
 # Who maintains and contributes to the project?
-@nathangjdf
+@nathandeflavis
 
 README adapted from [GitHub Docs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes).
