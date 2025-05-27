@@ -8,7 +8,7 @@ None.
 ## Reporting a Vulnerability
 
 ### Where do I go?
-You can report a vulnerability [here](https://github.com/nathangjdf/expressBookReviews/security/advisories/new).
+You can report a vulnerability [here](https://github.com/nathandeflavis/expressBookReviews/security/advisories/new).
 
 ### How often can I expect to get an update on a reported vulnerability?
 Periodically throughout the year.
