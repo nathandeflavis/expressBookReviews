@@ -64,6 +64,10 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   //post review with the username (stored in the session) posted
     const username = req.session.authorization['username'];
     const isbn = req.params.isbn;
+    // Prevent prototype pollution via dangerous keys
+    if (isbn === '__proto__' || isbn === 'constructor' || isbn === 'prototype') {
+        return res.status(400).send("Invalid ISBN value.");
+    }
     //accept a review as a request query
     const book = books[isbn];
 
@@ -91,6 +95,10 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 //delete book review
 regd_users.delete("/auth/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
+    // Prevent prototype pollution via dangerous keys
+    if (isbn === '__proto__' || isbn === 'constructor' || isbn === 'prototype') {
+        return res.status(400).send("Invalid ISBN value.");
+    }
     const book = books[isbn];
 
     if(book) {
