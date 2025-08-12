@@ -17,7 +17,15 @@ const authRateLimiter = RateLimit({
   message: { message: "Too many requests, please try again later." }
 });
 
-app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
+app.use("/customer", session({
+  secret: "fingerprint_customer",
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true
+  }
+}))
 app.use("/customer", lusca.csrf());
 
 // Apply rate limiter to /customer/auth/* routes
