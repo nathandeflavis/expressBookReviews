@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
+const escape = require('escape-html');
 
 let users = [];
 
@@ -99,7 +100,7 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
         const reviews_by_other_users = get_reviews_by_other_users(reviews, session_username);
         book['reviews'] = reviews_by_other_users;
         books[isbn] = book;
-        res.send(`Reviews for the ISBN ${isbn} posted by the user ${session_username} deleted.`);    
+        res.send(`Reviews for the ISBN ${escape(isbn)} posted by the user ${escape(session_username)} deleted.`);    
     } else {
         //book not found
         res.send('Unable to find book!');
