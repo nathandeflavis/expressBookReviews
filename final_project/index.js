@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session')
 const RateLimit = require('express-rate-limit');
+const lusca = require('lusca');
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
 
@@ -17,6 +18,7 @@ const authRateLimiter = RateLimit({
 });
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
+app.use("/customer", lusca.csrf());
 
 // Apply rate limiter to /customer/auth/* routes
 app.use("/customer/auth/*", authRateLimiter);
