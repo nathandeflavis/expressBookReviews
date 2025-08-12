@@ -3,6 +3,14 @@ const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
 const escape = require('escape-html');
+const rateLimit = require('express-rate-limit');
+
+// Rate limiter for login route: max 5 requests per minute per IP
+const loginLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 5,
+    message: { message: "Too many login attempts from this IP, please try again after a minute." }
+});
 
 let users = [];
 
@@ -35,7 +43,7 @@ const authenticatedUser = (username, password)=>{ //returns boolean
 }
 
 //only registered users can login
-regd_users.post("/login", (req,res) => {
+regd_users.post("/login", loginLimiter, (req,res) => {
     //Write your code here
     //save the user credentials for the session as a JWT
     const username = req.body.username;
