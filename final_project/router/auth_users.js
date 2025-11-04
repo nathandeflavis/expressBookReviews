@@ -93,7 +93,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     
         book['reviews'] = reviews;
         books[isbn] = book;
-        res.send(`The review for the book with ISBN ${isbn} has been added/updated.`);            
+        res.send(`The review for the book with ISBN ${escape(isbn)} has been added/updated.`);            
     } else {
         //book not found
         res.send("Unable to find book!");
